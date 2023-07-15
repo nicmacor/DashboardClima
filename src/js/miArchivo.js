@@ -80,20 +80,20 @@ let loadInocar = () => {
     function () {
 
         let meteo = localStorage.getItem('meteo');
-        if (meteo==null){
+        /*if (meteo==null){*/
         let URL = 'https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m,precipitation_probability&daily=temperature_2m_max,sunrise,uv_index_max&timezone=auto';
         fetch( URL )
             .then(response => response.json())
             .then(data => {
                 load(data);
                 /* GUARDAR DATA EN MEMORIA*/
-                localStorage.setItem("meteo", JSON.stringify(data))
+                /*localStorage.setItem("meteo", JSON.stringify(data))*/
             })
             .catch(console.error);
-        }else{
-            /* CARGAR DATA EN MEMORIA*/
+        /*}else{
+            /* CARGAR DATA EN MEMORIA
             load(JSON.parse(meteo))
-        }
+        }*/
 
         loadInocar();
     }
