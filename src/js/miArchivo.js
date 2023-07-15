@@ -52,7 +52,23 @@ let load = (data) => {
     timezoneHTML.textContent=timezone;
     plot(data);
     plut(data);
+    funcionPredeterminada(data);
 }
+/*
+let funcionPredeterminada = (data) =>{
+
+    const formulario = document.getElementById('uvi')
+
+    formulario.addEventListener('submit',(evento)=>{
+
+        evento.preventDefault();
+
+        let sunrise = data.getElementsByTagName;
+
+        document.getElementById("uv").value = sunrise;
+
+    })
+}*/
 
 let loadInocar = () => {
     let URL_proxy= "https://cors-anywhere.herokuapp.com/"
