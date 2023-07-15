@@ -2,45 +2,48 @@
 
 let plot = (data) => {
 
-    const ctx = document.getElementById('myChar');
-
-    const dataset = {
-        labels: data.hourly.time, /* ETIQUETA DE DATOS */
-        datasets: [{
-            label: 'Temperatura semanal', /* ETIQUETA DEL GRÁFICO */
-            data: data.hourly.temperature_2m, /* ARREGLO DE DATOS */
-            fill: false,
-            borderColor: 'rgb(75, 192, 192)',
-            tension: 0.1
-        }]
-    };
-
-    const config = {
-        type: 'line',
-        data: dataset,
-    };
-    
-    const chart = new Chart(ctx, config)
-}
-let plut = (data) => {
-
     const ctx = document.getElementById('myCha');
 
     const dataset = {
-        labels: data.hourly.time, /* ETIQUETA DE DATOS */
+        labels: data.daily.time, /* ETIQUETA DE DATOS */
         datasets: [{
-            label: 'Temperatura semanal', /* ETIQUETA DEL GRÁFICO */
-            data: data.hourly.temperature_2m, /* ARREGLO DE DATOS */
+            label: 'Temperatura diaria', /* ETIQUETA DEL GRÁFICO */
+            data: data.daily.temperature_2m_max, /* ARREGLO DE DATOS */
             fill: false,
-            borderColor: 'rgb(75, 192, 192)',
-            tension: 0.1
+            borderColor: 'rgb(75, 57, 192)',
+            tension: 0.1  
+           
         }]
-    };
+      };
+      
+      const config = {
+          type: 'bar',
+          data: dataset,
+      };
+    
+    const chart = new Chart(ctx, config)
+}
 
-    const config = {
-        type: 'line',
-        data: dataset,
-    };
+let plut = (data) => {
+
+    const ctx = document.getElementById('myChar');
+
+    const dataset = {
+        labels: data.daily.time, /* ETIQUETA DE DATOS */
+        datasets: [{
+            label: 'UV Index Diario', /* ETIQUETA DEL GRÁFICO */
+            data: data.daily.uv_index_max, /* ARREGLO DE DATOS */
+            fill: false,
+            borderColor: 'rgb(75, 57, 192)',
+            tension: 0.1  
+           
+        }]
+      };
+      
+      const config = {
+          type: 'line',
+          data: dataset,
+      };
     
     const chart = new Chart(ctx, config)
 }
@@ -50,6 +53,7 @@ let load = (data) => {
     let timezoneHTML=document.getElementById("timezone")
     timezoneHTML.textContent=timezone;
     plot(data);
+    plut(data);
 }
 
 let loadInocar = () => {
@@ -79,17 +83,17 @@ let loadInocar = () => {
 
         let meteo = localStorage.getItem('meteo');
         if (meteo==null){
-        let URL = 'https://api.open-meteo.com/v1/forecast?latitude=-2.20&longitude=-79.89&hourly=temperature_2m,relativehumidity_2m,precipitation_probability,rain&timezone=auto';
+        let URL = 'https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m,precipitation_probability&daily=temperature_2m_max,sunrise,uv_index_max&timezone=auto';
         fetch( URL )
             .then(response => response.json())
             .then(data => {
                 load(data);
-                /* GUARDAR DATA EN MEMORIA */
+                /* GUARDAR DATA EN MEMORIA*/
                 localStorage.setItem("meteo", JSON.stringify(data))
             })
             .catch(console.error);
         }else{
-            /* CARGAR DATA EN MEMORIA */
+            /* CARGAR DATA EN MEMORIA*/
             load(JSON.parse(meteo))
         }
 
