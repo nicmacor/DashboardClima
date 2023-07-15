@@ -1,5 +1,3 @@
-
-
 let plot = (data) => {
 
     const ctx = document.getElementById('myCha');
